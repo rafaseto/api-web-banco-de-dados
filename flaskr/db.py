@@ -8,24 +8,25 @@ Qualquer consulta ou operação é feita usando a conexão.
 Abaixo criamos a função get_db() que faz a conexão com o banco.
 get_db() é chamada quando a aplicação tiver sido criada e estiver lidando
 com um request.
-
-g: é um objeto especial único para cada request. É usado para 
-armazenar dados que podem ser acessados por múltiplas funções
-durante o request. A conexão é armazenada e reusada se get_db()
-for chamada duas vezes no mesmo request
-
-current_app: é um objeto especial que aponta para a aplicação Flask
-lidando com o request
-
-sqlite3.connect(): estabelece a conexão com o arquivo apontado pela
-configuration key DATABASE
-
-sqlite3.Row: Pede para a conexão retornar as linhas como dicionários. 
-Isso permite acessar as colunas pelo nome.
 """
 
 # Função que retorna a conexão com o banco
 def get_db():
+    """
+    g: é um objeto especial único para cada request. É usado para 
+    armazenar dados que podem ser acessados por múltiplas funções
+    durante o request. A conexão é armazenada e reusada se get_db()
+    for chamada duas vezes no mesmo request
+
+    current_app: é um objeto especial que aponta para a aplicação Flask
+    lidando com o request
+
+    sqlite3.connect(): estabelece a conexão com o arquivo apontado pela
+    configuration key DATABASE
+
+    sqlite3.Row: Pede para a conexão retornar as linhas como dicionários. 
+    Isso permite acessar as colunas pelo nome.
+    """
     # Se não já tivermos uma conexão armazenada no objeto g
     if 'db' not in g:
         # Criamos a conexão com o banco de dados SQLite
@@ -49,3 +50,21 @@ def close_db(e=None):
     if db is not None:
         # Fechamos a CONEXÃO com o banco de dados
         db.close
+
+# Função para inicializar o BD da app e executar comandos SQL de schema.sql
+def init_db():
+    # Obtendo a conexão com o banco
+    db = get_db()
+
+    # Abrindo o arquivo schema.sql
+    with current_app.open_resource('schema.sql') as f:
+        # Lendo o arquivo, decodificando em UTF-8 e executando
+        db.executescript(f.read().decode('utf8'))
+
+# Criando um comando de linha de comando chamado init_db para inicializar
+# o banco de dados da aplicação Flask
+@click.command('init_db')
+def init_db_command():  # Chamamos essa função quando init_db é executado
+    """Clear the existing data and create new tables."""
+    init_db()
+    click.echo('Initialized the database.')
