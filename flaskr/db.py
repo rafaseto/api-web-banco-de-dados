@@ -68,3 +68,11 @@ def init_db_command():  # Chamamos essa função quando init_db é executado
     """Clear the existing data and create new tables."""
     init_db()
     click.echo('Initialized the database.')
+
+# Função que inicializa a aplicação Flask com algumas configurações
+def init_app(app):
+    # Registrando a função close_db
+    app.teardown_appcontext(close_db)
+
+    # Registrando o comando de linha de comando init_db_command
+    app.cli.add_command(init_db_command)
