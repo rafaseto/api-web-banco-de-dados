@@ -63,7 +63,7 @@ def init_db():
 
 # Criando um comando de linha de comando chamado init_db para inicializar
 # o banco de dados da aplicação Flask
-@click.command('init_db')
+@click.command('init-db')
 def init_db_command():  # Chamamos essa função quando init_db é executado
     """Clear the existing data and create new tables."""
     init_db()
