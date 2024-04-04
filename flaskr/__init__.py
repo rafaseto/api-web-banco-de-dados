@@ -10,6 +10,7 @@ esse é chamada de application factory, qualquer configuração vai dentro dessa
 
 Uso: flask --app flaskr run --debug
 """
+
 def create_app(test_config=None):
     # Instanciando um objeto 'app' da classe Flask
     app = Flask(__name__, instance_relative_config=True)
