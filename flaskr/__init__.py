@@ -36,4 +36,8 @@ def create_app(test_config=None):
     from . import db
     db.init_app(app)
 
+    # Importando e registrando a blueprint na factory
+    from . import auth 
+    app.register_blueprint(auth.blueprint)
+
     return app
