@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS post;
+DROP TABLE IF EXISTS medico;
 
 -- Criando a tabela user
 CREATE TABLE user (
@@ -7,6 +8,15 @@ CREATE TABLE user (
     username TEXT UNIQUE NOT NULL,
     password TEXT NOT NULL
 );
+
+-- Criando a tabela medico
+CREATE TABLE medico (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    fk_user INTEGER NOT NULL,
+    FOREIGN KEY (fk_user) REFERENCES user (id)
+        ON DELETE CASCADE 
+        ON UPDATE CASCADE
+)
 
 -- Criando a tabela post
 CREATE TABLE post (
