@@ -29,7 +29,7 @@ def register():
             try:
                 db.execute(
                     "INSERT INTO user (username, password) VALUES (?, ?)",
-                    (username, generate_password_hash(password))
+                    (username, generate_password_hash(password)),
                 )
             except db.IntegrityError:
                 error = f"Usuário {username} já existe."
@@ -50,8 +50,8 @@ def login():
         error = None
 
         user = db.execute(
-            "SELECT * FROM user WHERE username = ?", 
-            (username)
+            "SELECT * FROM user WHERE username = ?",
+            (username,)
         ).fetchone()
 
         if user is None:
