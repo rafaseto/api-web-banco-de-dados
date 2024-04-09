@@ -2,6 +2,8 @@ import os
 
 from flask import Flask
 
+from flaskr.medico_routes import medico_blueprint
+
 """
 Uma aplicação Flask é uma instância da classe Flask. Todas as configurações e URLs
 serão registradas com essa classe.
@@ -44,5 +46,8 @@ def create_app(test_config=None):
     from . import blog
     app.register_blueprint(blog.blueprint)
     app.add_url_rule('/', endpoint='index')
+
+    # Registrando medico_routes na factory para que as rotas fiquem acessíveis
+    app.register_blueprint(medico_blueprint)
 
     return app
