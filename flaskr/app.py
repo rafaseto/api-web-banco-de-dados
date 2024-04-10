@@ -28,6 +28,7 @@ def get_usuarios():
     usuarios = cursor.fetchall()
     return jsonify(usuarios)
 
+# Rota para buscar usuario por id
 @app.route('/usuarios/<int:id>', methods=['GET'])
 def get_usuario(id):
     cursor = get_db().cursor()
@@ -37,6 +38,21 @@ def get_usuario(id):
     )
     usuario = cursor.fetchone()
     return jsonify(usuario)
+
+# Rota para adicionar um novo usuário
+@app.route('/usuarios', methods=['POST'])
+def add_usuario():
+    data = request.json
+    username = data['username']
+    password = data['password']
+    cursor = get_db().cursor()
+    cursor.execute(
+        "INSERT INTO user (username, password)"
+        "VALUES (?, ?)",
+        (username, password)
+    )
+    get_db().commit()
+    return jsonify({"message": "Usuário criado com sucesso"})
 
 # Rota para ler os médicos
 @app.route('/medicos', methods=['GET'])
