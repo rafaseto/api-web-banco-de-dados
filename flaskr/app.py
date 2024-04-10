@@ -161,5 +161,21 @@ def add_especialidade():
     get_db().commit()
     return jsonify({"message": "Especialidade criado com sucesso"})
 
+# Rota para atualizar especialidade
+@app.route('/especialidades/<int:pk_esp>', methods=['PUT'])
+def update_especialidade(pk_esp):
+    data = request.json
+    nome = data['nome']
+    area = data['area']
+    cursor = get_db().cursor()
+    cursor.execute(
+        "UPDATE user SET nome = ?, area = ?"
+        "WHERE pk_esp = ?",
+        (nome, area, pk_esp)
+    )
+    get_db().commit()
+    return jsonify({"message": "Especialidade atualizado com sucesso"})
+
+
 if __name__ == '__main__':
     app.run(debug=True)
