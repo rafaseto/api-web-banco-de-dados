@@ -169,13 +169,20 @@ def update_especialidade(pk_esp):
     area = data['area']
     cursor = get_db().cursor()
     cursor.execute(
-        "UPDATE user SET nome = ?, area = ?"
+        "UPDATE especialidade SET nome = ?, area = ?"
         "WHERE pk_esp = ?",
         (nome, area, pk_esp)
     )
     get_db().commit()
     return jsonify({"message": "Especialidade atualizado com sucesso"})
 
+# Rota para deletar especialidade por ID
+@app.route('/especialidades/<int:pk_esp>', methods=['DELETE'])
+def delete_especialidade(pk_esp):
+    cursor = get_db().cursor()
+    cursor.execute('DELETE FROM especialidade WHERE pk_esp = ?', (pk_esp,))
+    get_db().commit()
+    return jsonify({"message": "Especialidade deletado com sucesso"})
 
 if __name__ == '__main__':
     app.run(debug=True)
