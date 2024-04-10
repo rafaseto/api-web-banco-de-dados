@@ -137,7 +137,7 @@ def get_especialidades():
 
 # Rota para buscar especialidade por id
 @app.route('/especialidades/<int:pk_esp>', methods=['GET'])
-def get_usuario(pk_esp):
+def get_especialidade(pk_esp):
     cursor = get_db().cursor()
     cursor.execute(
         "SELECT * from especialidade WHERE pk_esp = ?",
@@ -145,6 +145,21 @@ def get_usuario(pk_esp):
     )
     especialidade = cursor.fetchone()
     return jsonify(especialidade)
+
+# Rota para adicionar uma nova especialidade
+@app.route('/especialidades', methods=['POST'])
+def add_especialidade():
+    data = request.json
+    nome = data['nome']
+    area = data['area']
+    cursor = get_db().cursor()
+    cursor.execute(
+        "INSERT INTO especialidade (nome, area)"
+        "VALUES (?, ?)",
+        (nome, area)
+    )
+    get_db().commit()
+    return jsonify({"message": "Especialidade criado com sucesso"})
 
 if __name__ == '__main__':
     app.run(debug=True)
