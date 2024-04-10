@@ -226,5 +226,13 @@ def update_especialista(id_medico, id_especialidade):
     get_db().commit()
     return jsonify({"message": "Especialista atualizado com sucesso"})
 
+# Rota para deletar um especialista por ID
+@app.route('/especialistas/<int:id_medico>/<int:id_especialidade>', methods=['DELETE'])
+def delete_especialista(id_medico, id_especialidade):
+    cursor = get_db().cursor()
+    cursor.execute('DELETE FROM Especialista WHERE id_medico = ? AND id_especialidade = ?', (id_medico, id_especialidade))
+    get_db().commit()
+    return jsonify({"message": "Especialista deletado com sucesso"})
+
 if __name__ == '__main__':
     app.run(debug=True)
