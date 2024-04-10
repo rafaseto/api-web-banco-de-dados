@@ -54,6 +54,22 @@ def add_usuario():
     get_db().commit()
     return jsonify({"message": "Usuário criado com sucesso"})
 
+# Rota para atualizar um usuário
+@app.route('/usuarios/<int:id>', methods=['PUT'])
+def update_usuario(id):
+    data = request.json
+    username = request['username']
+    password = request['password']
+    cursor = get_db().cursor()
+    cursor.execute(
+        "UPDATE user SET username = ?, password = ?"
+        "WHERE id = ?"
+        (username, password, id)
+    )
+    get_db().commit()
+    return jsonify({"message": "Usuário atualizado com sucesso"})
+
+
 # Rota para ler os médicos
 @app.route('/medicos', methods=['GET'])
 def get_medicos():
