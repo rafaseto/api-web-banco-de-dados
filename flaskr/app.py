@@ -28,6 +28,16 @@ def get_usuarios():
     usuarios = cursor.fetchall()
     return jsonify(usuarios)
 
+@app.route('/usuarios/<int:id>', methods=['GET'])
+def get_usuario(id):
+    cursor = get_db().cursor()
+    cursor.execute(
+        "SELECT * from user WHERE id = ?",
+        (id,)
+    )
+    usuario = cursor.fetchone()
+    return jsonify(usuario)
+
 # Rota para ler os médicos
 @app.route('/medicos', methods=['GET'])
 def get_medicos():
