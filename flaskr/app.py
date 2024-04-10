@@ -135,5 +135,16 @@ def get_especialidades():
     especialidades = cursor.fetchall()
     return jsonify(especialidades)
 
+# Rota para buscar especialidade por id
+@app.route('/especialidades/<int:pk_esp>', methods=['GET'])
+def get_usuario(pk_esp):
+    cursor = get_db().cursor()
+    cursor.execute(
+        "SELECT * from especialidade WHERE pk_esp = ?",
+        (pk_esp,)
+    )
+    especialidade = cursor.fetchone()
+    return jsonify(especialidade)
+
 if __name__ == '__main__':
     app.run(debug=True)
