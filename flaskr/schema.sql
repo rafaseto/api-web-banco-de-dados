@@ -18,6 +18,13 @@ CREATE TABLE medico (
         ON DELETE CASCADE 
 );
 
+-- Criando a tabela especialidade
+CREATE TABLE especialidade(
+    pk_esp INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome TEXT NOT NULL,
+    area TEXT
+)
+
 -- Criando a tabela post
 CREATE TABLE post (
     id INTEGER PRIMARY KEY AUTOINCREMENT,

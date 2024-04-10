@@ -29,12 +29,12 @@ def get_usuarios():
     return jsonify(usuarios)
 
 # Rota para buscar usuario por id
-@app.route('/usuarios/<int:id>', methods=['GET'])
-def get_usuario(id):
+@app.route('/usuarios/<int:pk_user>', methods=['GET'])
+def get_usuario(pk_user):
     cursor = get_db().cursor()
     cursor.execute(
         "SELECT * from user WHERE pk_user = ?",
-        (id,)
+        (pk_user,)
     )
     usuario = cursor.fetchone()
     return jsonify(usuario)
@@ -55,8 +55,8 @@ def add_usuario():
     return jsonify({"message": "Usuário criado com sucesso"})
 
 # Rota para atualizar um usuário
-@app.route('/usuarios/<int:id>', methods=['PUT'])
-def update_usuario(id):
+@app.route('/usuarios/<int:pk_user>', methods=['PUT'])
+def update_usuario(pk_user):
     data = request.json
     username = data['username']
     password = data['password']
@@ -64,16 +64,16 @@ def update_usuario(id):
     cursor.execute(
         "UPDATE user SET username = ?, password = ?"
         "WHERE pk_user = ?",
-        (username, password, id)
+        (username, password, pk_user)
     )
     get_db().commit()
     return jsonify({"message": "Usuário atualizado com sucesso"})
 
 # Rota para deletar um usuário por ID
-@app.route('/usuarios/<int:id>', methods=['DELETE'])
-def delete_user(id):
+@app.route('/usuarios/<int:pk_user>', methods=['DELETE'])
+def delete_user(pk_user):
     cursor = get_db().cursor()
-    cursor.execute('DELETE FROM user WHERE pk_user = ?', (id,))
+    cursor.execute('DELETE FROM user WHERE pk_user = ?', (pk_user,))
     get_db().commit()
     return jsonify({"message": "Usuário deletado com sucesso"})
 
