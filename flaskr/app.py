@@ -206,5 +206,13 @@ def get_all_especialistas():
     especialistas = cursor.fetchall()
     return jsonify(especialistas)
 
+# Rota para buscar um especialista por ID
+@app.route('/especialistas/<int:id_medico>/<int:id_especialidade>', methods=['GET'])
+def get_especialista(id_medico, id_especialidade):
+    cursor = get_db().cursor()
+    cursor.execute('SELECT * FROM Especialista WHERE id_medico = ? AND id_especialidade = ?', (id_medico, id_especialidade))
+    especialista = cursor.fetchone()
+    return jsonify(especialista)
+
 if __name__ == '__main__':
     app.run(debug=True)
