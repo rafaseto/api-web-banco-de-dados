@@ -16,7 +16,7 @@ CREATE TABLE medico (
     FOREIGN KEY (fk_user) REFERENCES user (id)
         ON DELETE CASCADE 
         ON UPDATE CASCADE
-)
+);
 
 -- Criando a tabela post
 CREATE TABLE post (
