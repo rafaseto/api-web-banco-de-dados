@@ -127,5 +127,13 @@ def delete_medico(id):
     get_db().commit()
     return jsonify({"message": "Medico deletado com sucesso"})
 
+# Rota para ler as especialidades
+@app.route('/especialidades', methods=['GET'])
+def get_especialidades():
+    cursor = get_db().cursor()
+    cursor.execute('SELECT * FROM especialidade')
+    especialidades = cursor.fetchall()
+    return jsonify(especialidades)
+
 if __name__ == '__main__':
     app.run(debug=True)

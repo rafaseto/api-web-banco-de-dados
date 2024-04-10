@@ -14,8 +14,8 @@ CREATE TABLE medico (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     fk_user INTEGER NOT NULL,
     FOREIGN KEY (fk_user) REFERENCES user (pk_user)
-        ON DELETE CASCADE 
         ON UPDATE CASCADE
+        ON DELETE CASCADE 
 );
 
 -- Criando a tabela post
