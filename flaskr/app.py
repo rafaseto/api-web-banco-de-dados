@@ -184,5 +184,27 @@ def delete_especialidade(pk_esp):
     get_db().commit()
     return jsonify({"message": "Especialidade deletado com sucesso"})
 
+# Rota para criar um novo especialista
+@app.route('/especialistas', methods=['POST'])
+def create_especialista():
+    data = request.json
+    id_medico = data['id_medico']
+    id_especialidade = data['id_especialidade']
+    cursor = get_db().cursor()
+    cursor.execute(
+        'INSERT INTO especialista (id_medico, id_especialidade) VALUES (?, ?)', 
+        (id_medico, id_especialidade)
+    )
+    get_db().commit()
+    return jsonify({"message": "Especialista criado com sucesso"})
+
+# Rota para listar todos os especialistas
+@app.route('/especialistas', methods=['GET'])
+def get_all_especialistas():
+    cursor = get_db().cursor()
+    cursor.execute('SELECT * FROM Especialista')
+    especialistas = cursor.fetchall()
+    return jsonify(especialistas)
+
 if __name__ == '__main__':
     app.run(debug=True)

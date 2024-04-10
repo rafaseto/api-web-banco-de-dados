@@ -1,6 +1,8 @@
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS post;
 DROP TABLE IF EXISTS medico;
+DROP TABLE IF EXISTS especialidade;
+DROP TABLE IF EXISTS especialista;
 
 -- Criando a tabela user
 CREATE TABLE user (
@@ -32,11 +34,11 @@ CREATE TABLE especialista (
     PRIMARY KEY (id_medico, id_especialidade),
     FOREIGN KEY (id_medico)
         REFERENCES medico (id)
-        ON DELETE SET DEFAULT
+        ON DELETE CASCADE
         ON UPDATE CASCADE,
-    FOREIGN KEY (id_especialista)
+    FOREIGN KEY (id_especialidade)
         REFERENCES especialidade (pk_esp)
-        ON DELETE SET DEFAULT
+        ON DELETE CASCADE
         ON UPDATE CASCADE
 );
 
