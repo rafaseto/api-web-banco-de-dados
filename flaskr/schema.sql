@@ -23,7 +23,22 @@ CREATE TABLE especialidade(
     pk_esp INTEGER PRIMARY KEY AUTOINCREMENT,
     nome TEXT NOT NULL,
     area TEXT
-)
+);
+
+-- Criando a tabela especialista
+CREATE TABLE especialista (
+    id_medico INTEGER NOT NULL,
+    id_especialidade INTEGER NOT NULL,
+    PRIMARY KEY (id_medico, id_especialidade),
+    FOREIGN KEY (id_medico)
+        REFERENCES medico (id)
+        ON DELETE SET DEFAULT
+        ON UPDATE CASCADE,
+    FOREIGN KEY (id_especialista)
+        REFERENCES especialidade (pk_esp)
+        ON DELETE SET DEFAULT
+        ON UPDATE CASCADE
+);
 
 -- Criando a tabela post
 CREATE TABLE post (
