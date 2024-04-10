@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS medico;
 
 -- Criando a tabela user
 CREATE TABLE user (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    pk_user INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT UNIQUE NOT NULL,
     password TEXT NOT NULL
 );
@@ -13,7 +13,7 @@ CREATE TABLE user (
 CREATE TABLE medico (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     fk_user INTEGER NOT NULL,
-    FOREIGN KEY (fk_user) REFERENCES user (id)
+    FOREIGN KEY (fk_user) REFERENCES user (pk_user)
         ON DELETE CASCADE 
         ON UPDATE CASCADE
 );

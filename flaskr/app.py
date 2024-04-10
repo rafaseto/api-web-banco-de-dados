@@ -33,7 +33,7 @@ def get_usuarios():
 def get_usuario(id):
     cursor = get_db().cursor()
     cursor.execute(
-        "SELECT * from user WHERE id = ?",
+        "SELECT * from user WHERE pk_user = ?",
         (id,)
     )
     usuario = cursor.fetchone()
@@ -58,16 +58,24 @@ def add_usuario():
 @app.route('/usuarios/<int:id>', methods=['PUT'])
 def update_usuario(id):
     data = request.json
-    username = request['username']
-    password = request['password']
+    username = data['username']
+    password = data['password']
     cursor = get_db().cursor()
     cursor.execute(
         "UPDATE user SET username = ?, password = ?"
-        "WHERE id = ?"
+        "WHERE pk_user = ?",
         (username, password, id)
     )
     get_db().commit()
     return jsonify({"message": "Usuário atualizado com sucesso"})
+
+# Rota para deletar um usuário por ID
+@app.route('/usuarios/<int:id>', methods=['DELETE'])
+def delete_user(id):
+    cursor = get_db().cursor()
+    cursor.execute('DELETE FROM user WHERE pk_user = ?', (id,))
+    get_db().commit()
+    return jsonify({"message": "Usuário deletado com sucesso"})
 
 
 # Rota para ler os médicos
